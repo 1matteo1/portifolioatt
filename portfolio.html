@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfólio | Matteo D'Aquila</title>
+  <meta name="description" content="Projetos e trabalhos realizados por Matteo D'Aquila." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="../css/style.css" />
+  <script>
+    (function () {
+      var saved = localStorage.getItem("portfolio-theme");
+      if (saved) document.documentElement.setAttribute("data-theme", saved);
+    })();
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo"><strong>Matteo D'Aquila</strong> <span>/ dev</span></a>
+
+      <nav aria-label="Navegação principal">
+        <ul class="nav-menu" id="nav-menu">
+          <li><a href="index.html">Sobre mim</a></li>
+          <li><a href="formacao.html">Formação</a></li>
+          <li><a href="portfolio.html">Portfólio</a></li>
+          <li><a href="contato.html">Contato</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Ativar tema escuro">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="4" />
+            <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z" />
+          </svg>
+        </button>
+        <button id="menu-toggle" class="menu-toggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="container reveal" style="padding-top: clamp(2.5rem, 6vw, 4rem)">
+      <div class="section-head">
+        <span class="eyebrow">Portfólio</span>
+        <h2>Projetos e trabalhos realizados</h2>
+      </div>
+      <p>
+        Este é o meu primeiro projeto — ainda não tenho outros trabalhos
+        profissionais ou sites no portfólio, mas essa é só a largada. A
+        ideia é usar este projeto para demonstrar meu início no
+        desenvolvimento e registrar minha evolução ao longo do tempo.
+      </p>
+    </section>
+
+    <!-- ======================= GRADE DE PROJETOS ======================= -->
+    <section class="container reveal">
+      <ul class="project-grid">
+        <li class="project-card">
+          <span class="project-index">PROJ. 01</span>
+          <h3>Portfólio Pessoal (este site)</h3>
+          <p>
+            Meu primeiro projeto de desenvolvimento web: um currículo
+            online construído do zero em HTML5, CSS3 e JavaScript puro,
+            com menu responsivo, tema claro/escuro e formulário de contato
+            validado.
+          </p>
+          <ul class="project-tags">
+            <li>HTML</li>
+            <li>CSS</li>
+            <li>JavaScript</li>
+          </ul>
+          <!-- Troque o link "#" pelo endereço do seu repositório no GitHub -->
+          <a class="project-link" href="#" target="_blank" rel="noopener">Ver repositório →</a>
+        </li>
+
+        <li class="project-card">
+          <span class="project-index">PROJ. 02</span>
+          <h3>Próximo projeto em breve</h3>
+          <p>
+            Estou continuando a estudar e praticar — os próximos projetos
+            entram aqui conforme eu for evoluindo.
+          </p>
+          <ul class="project-tags">
+            <li>Em construção</li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span>&copy; 2026 Matteo D'Aquila. Todos os direitos reservados.</span>
+      <span>
+        <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a> ·
+        <a href="https://linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
+      </span>
+    </div>
+  </footer>
+
+  <script src="../js/script.js"></script>
+</body>
+</html>

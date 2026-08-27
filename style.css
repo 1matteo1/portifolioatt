@@ -1,0 +1,896 @@
+/* ==========================================================================
+   PORTFÓLIO PESSOAL — FOLHA DE ESTILOS
+   Conceito visual: "prancheta de arquiteto".
+   Modo claro  = papel vegetal / rascunho técnico (tinta escura sobre papel).
+   Modo escuro = planta baixa (blueprint) clássica: linhas claras sobre azul.
+   O botão de tema não é só um utilitário: ele encena a própria metáfora
+   do projeto (rascunho em papel <-> planta impressa em azul).
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. TOKENS DE DESIGN (cores, tipografia, espaçamento)
+   -------------------------------------------------------------------------- */
+:root {
+  /* Paleta - modo claro ("papel vegetal") */
+  --bg: #edeae1;
+  --bg-panel: #e2ded2;
+  --ink: #1b2a33;
+  --ink-soft: #52626b;
+  --line: #c9c1aa;
+  --accent: #1f5c73;
+  --accent-ink: #ffffff;
+  --accent-soft: rgba(31, 92, 115, 0.12);
+  --brass: #9c7228;
+  --danger: #a13d2c;
+  --shadow: 0 1px 0 rgba(27, 42, 51, 0.06);
+
+  /* Tipografia */
+  --font-display: "Space Grotesk", "Segoe UI", sans-serif;
+  --font-body: "Inter", "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", "Courier New", monospace;
+
+  /* Escala tipográfica */
+  --step-caption: 0.72rem;
+  --step-small: 0.875rem;
+  --step-body: 1rem;
+  --step-lead: 1.15rem;
+  --step-h3: 1.4rem;
+  --step-h2: 2rem;
+  --step-h1: clamp(2.4rem, 5vw, 4rem);
+
+  /* Espaçamento e layout */
+  --content-width: 1120px;
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+  --radius: 2px;
+  --transition: 200ms ease;
+}
+
+/* Paleta - modo escuro ("planta baixa / blueprint") */
+[data-theme="dark"] {
+  --bg: #0f2c42;
+  --bg-panel: #0b2336;
+  --ink: #eaf4f8;
+  --ink-soft: #a9c4d3;
+  --line: rgba(234, 244, 248, 0.22);
+  --accent: #7fd8e8;
+  --accent-ink: #06222f;
+  --accent-soft: rgba(127, 216, 232, 0.14);
+  --brass: #e3b34d;
+  --danger: #ff9d85;
+  --shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
+}
+
+/* --------------------------------------------------------------------------
+   2. RESET BÁSICO
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--step-body);
+  line-height: 1.6;
+  transition: background-color var(--transition), color var(--transition);
+  /* Textura sutil de "papel milimetrado" para reforçar a metáfora de prancheta */
+  background-image: linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-attachment: fixed;
+  background-blend-mode: overlay;
+  opacity: 1;
+}
+
+[data-theme="dark"] body {
+  background-blend-mode: soft-light;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  line-height: 1.15;
+  margin: 0 0 0.5em;
+  letter-spacing: -0.01em;
+}
+
+p {
+  margin: 0 0 1em;
+  color: var(--ink-soft);
+  max-width: 62ch;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* Foco visível para navegação por teclado (acessibilidade) */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--content-width);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* Rótulo estilo "carimbo técnico" usado antes de títulos de seção */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  font-family: var(--font-mono);
+  font-size: var(--step-caption);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.75em;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 1.4em;
+  height: 1px;
+  background: var(--accent);
+}
+
+/* --------------------------------------------------------------------------
+   3. CABEÇALHO / MENU (estilo "carimbo de prancheta")
+   -------------------------------------------------------------------------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background-color: var(--bg);
+  border-bottom: 1px solid var(--line);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 1.1rem;
+}
+
+.logo {
+  font-family: var(--font-mono);
+  font-size: var(--step-small);
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  border: 1px solid var(--line);
+  padding: 0.35em 0.7em;
+  display: inline-flex;
+  gap: 0.4em;
+}
+
+.logo strong {
+  color: var(--ink);
+}
+
+.logo span {
+  color: var(--ink-soft);
+}
+
+/* Navegação principal — presente e idêntica em todas as páginas */
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 2vw, 2.2rem);
+}
+
+.nav-menu a {
+  text-decoration: none;
+  font-size: var(--step-small);
+  color: var(--ink-soft);
+  position: relative;
+  padding: 0.25em 0.1em;
+  transition: color var(--transition);
+}
+
+.nav-menu a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--transition);
+}
+
+.nav-menu a:hover,
+.nav-menu a[aria-current="page"] {
+  color: var(--ink);
+}
+
+.nav-menu a:hover::after,
+.nav-menu a[aria-current="page"]::after {
+  transform: scaleX(1);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+/* Botão de alternância de tema (claro/escuro) */
+.theme-toggle {
+  width: 2.4rem;
+  height: 2.4rem;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color var(--transition), transform var(--transition);
+}
+
+.theme-toggle:hover {
+  border-color: var(--accent);
+}
+
+.theme-toggle svg {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.theme-toggle .icon-moon {
+  display: none;
+}
+
+[data-theme="dark"] .theme-toggle .icon-sun {
+  display: none;
+}
+
+[data-theme="dark"] .theme-toggle .icon-moon {
+  display: block;
+}
+
+/* Botão hambúrguer — só aparece no mobile */
+.menu-toggle {
+  display: none;
+  width: 2.4rem;
+  height: 2.4rem;
+  border: 1px solid var(--line);
+  background: transparent;
+  cursor: pointer;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.menu-toggle span {
+  width: 1.1rem;
+  height: 2px;
+  background: var(--ink);
+  transition: transform var(--transition), opacity var(--transition);
+}
+
+.menu-toggle[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.menu-toggle[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-toggle[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+/* --------------------------------------------------------------------------
+   4. MARCAS DE REGISTRO (elemento de assinatura visual, usado com moderação)
+   -------------------------------------------------------------------------- */
+.registered {
+  position: relative;
+}
+
+.registered::before,
+.registered::after {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: var(--accent);
+  opacity: 0.7;
+}
+
+.registered::before {
+  top: -1px;
+  left: -1px;
+  border-top: 2px solid var(--accent);
+  border-left: 2px solid var(--accent);
+}
+
+.registered::after {
+  bottom: -1px;
+  right: -1px;
+  border-bottom: 2px solid var(--accent);
+  border-right: 2px solid var(--accent);
+}
+
+/* --------------------------------------------------------------------------
+   5. HERO (página inicial / Sobre mim)
+   -------------------------------------------------------------------------- */
+.hero {
+  padding-block: clamp(3rem, 8vw, 6rem) clamp(2.5rem, 6vw, 4rem);
+  display: grid;
+  grid-template-columns: 1.3fr 0.9fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+}
+
+.hero-title {
+  font-size: var(--step-h1);
+}
+
+.hero-title .line {
+  display: block;
+}
+
+.hero-title .accent {
+  color: var(--accent);
+}
+
+.hero-role {
+  font-family: var(--font-mono);
+  font-size: var(--step-small);
+  color: var(--ink-soft);
+  letter-spacing: 0.04em;
+  margin-bottom: 1.4rem;
+}
+
+.hero-lead {
+  font-size: var(--step-lead);
+  max-width: 46ch;
+}
+
+.hero-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  margin-top: 1.6rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.75em 1.3em;
+  font-size: var(--step-small);
+  text-decoration: none;
+  border: 1px solid var(--ink);
+  color: var(--ink);
+  background: transparent;
+  cursor: pointer;
+  transition: background-color var(--transition), color var(--transition),
+    border-color var(--transition);
+}
+
+.btn:hover {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+.btn-primary {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.btn-primary:hover {
+  background: transparent;
+  color: var(--accent);
+}
+
+/* Painel do avatar — sem depender de imagens externas */
+.avatar-panel {
+  aspect-ratio: 4 / 5;
+  border: 1px solid var(--line);
+  background: var(--bg-panel);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.avatar-panel .initials {
+  font-family: var(--font-display);
+  font-size: 5rem;
+  color: var(--accent);
+  opacity: 0.85;
+}
+
+.avatar-panel .grid-lines {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 20px 20px;
+  opacity: 0.6;
+}
+
+.avatar-panel .coords {
+  position: absolute;
+  bottom: 0.8rem;
+  left: 0.9rem;
+  font-family: var(--font-mono);
+  font-size: var(--step-caption);
+  color: var(--ink-soft);
+}
+
+/* --------------------------------------------------------------------------
+   6. SEÇÕES GERAIS
+   -------------------------------------------------------------------------- */
+section {
+  padding-block: clamp(2.5rem, 6vw, 4.5rem);
+}
+
+section + section {
+  border-top: 1px solid var(--line);
+}
+
+.section-head {
+  margin-bottom: 2rem;
+  max-width: 60ch;
+}
+
+.section-head h2 {
+  font-size: var(--step-h2);
+}
+
+/* Grade de "hobbies" / interesses na página Sobre mim */
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1.5rem;
+}
+
+.tag-list li {
+  font-family: var(--font-mono);
+  font-size: var(--step-caption);
+  border: 1px solid var(--line);
+  padding: 0.4em 0.8em;
+  color: var(--ink-soft);
+}
+
+/* --------------------------------------------------------------------------
+   7. FORMAÇÃO — linha do tempo (sequência real, por isso a numeração se justifica)
+   -------------------------------------------------------------------------- */
+.timeline {
+  position: relative;
+  border-left: 1px solid var(--line);
+  padding-left: clamp(1.5rem, 4vw, 3rem);
+  display: flex;
+  flex-direction: column;
+  gap: 2.2rem;
+}
+
+.timeline-item {
+  position: relative;
+}
+
+.timeline-item::before {
+  content: attr(data-index);
+  position: absolute;
+  left: calc(-1 * clamp(1.5rem, 4vw, 3rem) - 1px);
+  top: 0;
+  transform: translateX(-50%);
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: var(--step-caption);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.timeline-item .period {
+  font-family: var(--font-mono);
+  font-size: var(--step-caption);
+  color: var(--accent);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.timeline-item h3 {
+  font-size: var(--step-h3);
+  margin-top: 0.3em;
+}
+
+/* Idiomas — barras de proficiência somente com CSS */
+.language-grid {
+  display: grid;
+  gap: 1.2rem;
+  margin-top: 2rem;
+  max-width: 480px;
+}
+
+.language-row {
+  display: grid;
+  grid-template-columns: 7rem 1fr;
+  align-items: center;
+  gap: 1rem;
+  font-size: var(--step-small);
+}
+
+.language-bar {
+  height: 6px;
+  background: var(--bg-panel);
+  border: 1px solid var(--line);
+  position: relative;
+}
+
+.language-bar span {
+  position: absolute;
+  inset: 0;
+  width: var(--level, 50%);
+  background: var(--accent);
+}
+
+/* --------------------------------------------------------------------------
+   8. PORTFÓLIO — grade de projetos
+   -------------------------------------------------------------------------- */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.project-card {
+  border: 1px solid var(--line);
+  background: var(--bg-panel);
+  padding: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  transition: border-color var(--transition), transform var(--transition);
+}
+
+.project-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+}
+
+.project-card .project-index {
+  font-family: var(--font-mono);
+  font-size: var(--step-caption);
+  color: var(--ink-soft);
+}
+
+.project-card h3 {
+  font-size: var(--step-h3);
+}
+
+.project-card p {
+  font-size: var(--step-small);
+  flex-grow: 1;
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.project-tags li {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid var(--accent-soft);
+  background: var(--accent-soft);
+  padding: 0.25em 0.55em;
+}
+
+.project-card .project-link {
+  align-self: flex-start;
+  font-size: var(--step-small);
+  text-decoration: none;
+  color: var(--accent);
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   9. CONTATO — formulário e validação
+   -------------------------------------------------------------------------- */
+.contact-layout {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: start;
+}
+
+.contact-info dl {
+  margin-top: 1.5rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.contact-info dt {
+  font-family: var(--font-mono);
+  font-size: var(--step-caption);
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.contact-info dd {
+  margin: 0.2rem 0 0;
+  font-size: var(--step-body);
+}
+
+.form-field {
+  margin-bottom: 1.4rem;
+}
+
+.form-field label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--step-caption);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 0.5em;
+}
+
+.form-field input,
+.form-field textarea {
+  width: 100%;
+  background: var(--bg-panel);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  padding: 0.75em 0.85em;
+  font-family: var(--font-body);
+  font-size: var(--step-body);
+  transition: border-color var(--transition);
+}
+
+.form-field input:focus,
+.form-field textarea:focus {
+  border-color: var(--accent);
+}
+
+.form-field textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.form-field .field-error {
+  display: block;
+  min-height: 1.2em;
+  font-size: var(--step-caption);
+  color: var(--danger);
+  margin-top: 0.4em;
+}
+
+.form-field.has-error input,
+.form-field.has-error textarea {
+  border-color: var(--danger);
+}
+
+.form-status {
+  min-height: 1.4em;
+  font-size: var(--step-small);
+  margin-top: 0.5rem;
+}
+
+/* --------------------------------------------------------------------------
+   10. MODAL DE CONFIRMAÇÃO
+   -------------------------------------------------------------------------- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 24, 30, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition);
+}
+
+.modal-overlay.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal {
+  background: var(--bg);
+  border: 1px solid var(--accent);
+  max-width: 420px;
+  width: 100%;
+  padding: 2rem;
+  position: relative;
+  transform: translateY(12px);
+  transition: transform var(--transition);
+}
+
+.modal-overlay.is-open .modal {
+  transform: translateY(0);
+}
+
+.modal .eyebrow {
+  color: var(--accent);
+}
+
+.modal h3 {
+  font-size: var(--step-h3);
+}
+
+.modal-close {
+  position: absolute;
+  top: 0.9rem;
+  right: 0.9rem;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+/* --------------------------------------------------------------------------
+   11. RODAPÉ
+   -------------------------------------------------------------------------- */
+.site-footer {
+  border-top: 1px solid var(--line);
+  padding-block: 2rem;
+  font-family: var(--font-mono);
+  font-size: var(--step-caption);
+  color: var(--ink-soft);
+}
+
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.site-footer a {
+  color: var(--ink-soft);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+.site-footer a:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* --------------------------------------------------------------------------
+   12. REVELAÇÃO SUAVE AO ROLAR (JS adiciona a classe .is-visible)
+   -------------------------------------------------------------------------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 500ms ease, transform 500ms ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   13. RESPONSIVO — MENU MOBILE
+   -------------------------------------------------------------------------- */
+@media (max-width: 860px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+
+  .avatar-panel {
+    order: -1;
+    max-width: 260px;
+  }
+
+  .contact-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .menu-toggle {
+    display: inline-flex;
+  }
+
+  .nav-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height var(--transition);
+  }
+
+  .nav-menu.is-open {
+    max-height: 320px;
+  }
+
+  .nav-menu a {
+    width: 100%;
+    padding: 1rem var(--gutter);
+    border-top: 1px solid var(--line);
+  }
+
+  .nav-menu a::after {
+    display: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .language-row {
+    grid-template-columns: 5.5rem 1fr;
+  }
+}
